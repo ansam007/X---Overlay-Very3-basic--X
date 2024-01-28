@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import FormStructure from "./components/FormStructure/FormStructure";
+import {useState} from 'react';
 
 function App() {
+
+  const[userData, setUserData] = useState([]);
+
+  const addUserDetailHandler = (name, age, college) => {
+    setUserData((prevData)=>{
+      return [...prevData, {Name: name, Age: age, College: college, id: Math.random().toString()}]
+    }) 
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+    <FormStructure addUserDetails={addUserDetailHandler}></FormStructure>
+    <ul>
+      {userData.map((user) => (
+        <li key={user.id}>
+          {user.Name} ,({user.Age} years old, {user.College})
+        </li>
+      ))}
+    </ul>
     </div>
   );
 }
